@@ -23,6 +23,7 @@ window.onload = function() {
   setInstr('Please play all audios / videos. Navigate using up/down, then press OK to start the test.');
   runNextAutoTest();
 };
+
 function runStep(name) {
   setInstr('Retrieving URL...');
   showStatus(true, '');
@@ -39,6 +40,9 @@ function runStep(name) {
     return;
   }
   if (name=='mpegts') {
+    // URL example:
+    // http://itv.mit-xperts.com/hbbtvtest/media/timecode.mpeg
+    // this url is the full path for timecode.mpeg
     playVideo('video/mpeg', '<?php echo getMediaURL(); ?>timecode.mpeg', true);
     return;
   }
@@ -59,6 +63,8 @@ function runStep(name) {
     return;
   }
   if (name=='tsstream') {
+    // meida url:
+    // http://itv.mit-xperts.com/hbbtvtest/media/livestream.php
     playVideo('video/mpeg', '<?php echo getMediaURL(); ?>livestream.php', true);
     return;
   }
@@ -102,6 +108,10 @@ function runStep(name) {
   req.open('GET', 'videourl.php?id='+name);
   req.send(null);
 }
+
+// 1. stop the video play
+// 2. release the video element
+// 3. empty the vidcontainer's content
 function stopVideo() {
   var elem = document.getElementById('vidcontainer');
   var oldvid = document.getElementById('video');
@@ -120,25 +130,39 @@ function stopVideo() {
   }
   elem.innerHTML = '';
 }
+
+// mtype: the media type
+// murl: the media url
+// registerlistener: the flag to determine whether to listen the playStateChange or not.
 function playVideo(mtype, murl, registerlistener) {
   setInstr('Playing '+murl+' ('+mtype+')...');
+
+  // Create the video object and append it to the vidcontainer element
   var elem = document.getElementById('vidcontainer');
   var ihtml = '<object id="video" type="'+mtype+'" style="position: absolute; left: 700px; top: 300px; width: 320px; height: 180px;"><'+'/object>';
   elem.innerHTML = ihtml;
+
   try {
+    // Get the video element
     var videlem = document.getElementById('video');
+
     if (registerlistener) {
       videlem.onPlayStateChange = function() {
-        if (1==videlem.playState) {
+        // playState is defined in: https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/ms533677(v=vs.85)
+        if (1==videlem.playState) { // Playback is stopped.
           videlem.onPlayStateChange = null;
           showStatus(true, mtype+' should be playing now.');
-        } else if (6==videlem.playState) {
+        } else if (6==videlem.playState) { the player is buffering media.
           videlem.onPlayStateChange = null;
           showStatus(false, mtype+' playback failed (error event).');
         }
       };
     }
+
+    // Set the url to the video object's data attribute
     videlem.data = murl;
+
+    // Let the video object begin to play
     videlem.play(1);
   } catch (e) {
     showStatus(false, 'Setting the video object '+mtype+' failed.');

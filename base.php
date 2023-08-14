@@ -41,6 +41,8 @@ function openDocument($title='MIT-xperts HbbTV testsuite', $allscripts=1, $addhe
   }
 }
 
+// Generate the full path for Meida URL
+// The default suffix is http
 function getMediaURL($useHttps=0) {
   global $ROOTDIR;
   $path = $_SERVER['PHP_SELF'];

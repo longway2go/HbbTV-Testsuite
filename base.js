@@ -205,6 +205,7 @@ function showAppStartStatus(succss, txt) {
     setInstr(txt);
 }
 
+// set innerHTML for the instr element
 function setInstr(txt) {
     var instr = document.getElementById('instr');
     try {

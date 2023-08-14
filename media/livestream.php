@@ -5,7 +5,18 @@ $vidfile = 'timecode.mpeg';
 $fp = @fopen($vidfile, 'rb');
 if(!$fp) {
   header('HTTP/1.0 404 Not Found');
-  echo "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>404 Not Found</title>\n</head><body>\n<h1>Not Found</h1>\n<p>The requested video was not found on this server.</p>\n</body></html>";
+  echo "
+        <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n
+        <html>
+             <head>\n
+                <title>404 Not Found</title>\n
+             </head>
+             <body>\n
+                <h1>Not Found</h1>\n
+                <p>The requested video was not found on this server.</p>\n
+             </body>
+        </html>
+        ";
   exit;
 }
 
