@@ -20,6 +20,7 @@ function initVideo() {
     }
 }
 
+// show & activate the application
 function initApp() {
     try {
         var app = document.getElementById('appmgr').getOwnerApplication(document);
