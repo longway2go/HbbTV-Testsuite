@@ -13,11 +13,15 @@ var req = false;
 var testPrefix = <?php echo json_encode(getTestPrefix()); ?>;
 
 window.onload = function() {
+  // select sub-menu 0
   menuInit();
+
   registerMenuListener(function(liid) {
     if (liid=='exit') {
       document.location.href = '../index.php';
     } else {
+      // the menu has only two sub-menu: play and exit.
+      // so this liid must be 'play'
       runStep(liid);
     }
   });
@@ -25,13 +29,17 @@ window.onload = function() {
   setInstr('Try to run play multiple times to play back memory cached audio clip. At least after the first playback, later playbacks should (maybe) occur instantly.');
   runNextAutoTest();
 };
+
 function runStep(name) {
   if (name=='play') {
+    // stop the audio if it's playing
     try {
       document.getElementById('aud').stop();
     } catch (e) {
       // ignore
     }
+
+    // play the audio 2 times
     try {
       document.getElementById('aud').play(1);
       showStatus(true, 'Playback started, check audio (audio clip should be played 2 times).');

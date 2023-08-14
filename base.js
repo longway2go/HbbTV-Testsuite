@@ -112,6 +112,7 @@ function registerMenuListener(execTest, noPreventDefault) {
     }, false);
 }
 
+// 初始时，菜单选择第一个子菜单项
 function menuInit() {
     opts = document.getElementById('menu').getElementsByTagName('li');
     menuSelect(0);
