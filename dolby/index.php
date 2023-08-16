@@ -9,6 +9,7 @@ openDocument();
 //<![CDATA[
 var legalshowing = false;
 var testPrefix = <?php echo json_encode(getTestPrefix()); ?>;
+
 window.onload = function() {
   menuInit();
   registerMenuListener(function(liid) {
@@ -26,6 +27,7 @@ window.onload = function() {
   <?php } ?>
   runNextAutoTest();
 };
+
 function nameselect(snam) {
   if (!snam) return;
   for (var i=0; i<opts.length; i++) {
@@ -36,6 +38,7 @@ function nameselect(snam) {
     }
   }
 }
+
 function showVid() {
   var vid = document.createElement("object");
   vid.type = "video/broadcast";
@@ -53,6 +56,7 @@ function showVid() {
     showStatus(false, 'Starting of broadcast video failed.');
   }
 }
+
 function runStep(name) {
   if (name=='legal') {
     legalshowing = !legalshowing;

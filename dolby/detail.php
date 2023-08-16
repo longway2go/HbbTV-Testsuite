@@ -90,6 +90,7 @@ window.onload = function() {
   }
   runNextAutoTest();
 };
+
 function showVid() {
   vid = document.createElement("object");
   vid.type = mtype;
@@ -103,6 +104,7 @@ function showVid() {
   vid.style.outline = "transparent";
   document.getElementById("vidcontainer").appendChild(vid);
 }
+
 function showVidData() {
   if (vidtimer) {
     clearTimeout(vidtimer);
@@ -111,6 +113,7 @@ function showVidData() {
   document.getElementById("vidstatus").innerHTML = 'Video play state = '+vid.playState+'<br />play position = '+vid.playPosition;
   vidtimer = setTimeout(function() { vidtimer=null; showVidData(); }, 1000);
 }
+
 function gotoPos(scnds) {
   try {
     vid.seek(scnds*1000);
@@ -120,6 +123,7 @@ function gotoPos(scnds) {
     showStatus(false, 'Cannot change playback position');
   }
 }
+
 function testPos(scnds) {
   if (testTimeout) {
     clearTimeout(testTimeout);
@@ -138,6 +142,7 @@ function testPos(scnds) {
     }
   }, 2000);
 }
+
 function compareComponent(checkvc, expectedIdx, intType) {
   var key, vcvalue, expectStream = expected[expectedIdx];
   try {
@@ -167,6 +172,7 @@ function compareComponent(checkvc, expectedIdx, intType) {
   }
   return 1;
 }
+
 function getActiveComponentIdx() {
   var i, activevc, found, intType = vid.COMPONENT_TYPE_AUDIO;
   try {
@@ -186,6 +192,7 @@ function getActiveComponentIdx() {
   }
   return -1;
 }
+
 function showActiveComponent() {
   var i;
   getComponents();
@@ -200,6 +207,7 @@ function showActiveComponent() {
     showStatus(true, "Active component: "+expected[i].displayname);
   }
 }
+
 function getComponents() {
   var intType = vid.COMPONENT_TYPE_AUDIO, vc = false, i, j;
   var expectStream, checkvc, found, key, descrStr;
@@ -251,6 +259,7 @@ function getComponents() {
   }
   return foundStreams;
 }
+
 function selectComponents(index) {
   var vc = getComponents();
   var i, intType = vid.COMPONENT_TYPE_AUDIO;
@@ -283,6 +292,7 @@ function selectComponents(index) {
   }
   setTimeout(function() {selectComponentsStage2(index, vc);}, (hbbtv12&&index>=0)?100:2000);
 }
+
 function selectComponentsStage2(index, vc) {
   var shouldBe, activevc, intType = vid.COMPONENT_TYPE_AUDIO;
   try {
@@ -322,6 +332,7 @@ function selectComponentsStage2(index, vc) {
   }
   showStatus(true, 'component should now be selected.');
 }
+
 function checkVideoPlaying(remainSecs) {
   if (!vid.playState  || vid.playState==2 || vid.playState==3 || vid.playState==4) {
     // not playing yet
@@ -334,6 +345,7 @@ function checkVideoPlaying(remainSecs) {
     showStatus(true, 'Video should be playing now');
   }
 }
+
 function runStep(name) {
   if (name==="playvid") {
     try {
@@ -382,12 +394,12 @@ function runStep(name) {
 <div id="vidstatus" class="txtdiv" style="left: 700px; top: 460px; width: 416px;"></div>
 <ul id="menu" class="menu" style="left: 100px; top: 100px;">
   <li name="playvid">Start video</li>
-<?php if (count($channels)) { ?>
-  <li name="goch0" automate="audio">Unselect all audio channels</li>
-  <li name="goch1" automate="audio">Select audio: <?php echo $channelkeys[0]; ?></li>
-  <li name="goch2" automate="audio">Select audio: <?php echo $channelkeys[1]; ?></li>
-  <li name="showch">Query active audio channel</li>
-<?php } ?>
+  <?php if (count($channels)) { ?>
+    <li name="goch0" automate="audio">Unselect all audio channels</li>
+    <li name="goch1" automate="audio">Select audio: <?php echo $channelkeys[0]; ?></li>
+    <li name="goch2" automate="audio">Select audio: <?php echo $channelkeys[1]; ?></li>
+    <li name="showch">Query active audio channel</li>
+  <?php } ?>
   <li name="gotopos30" automate="visual">Seek to pos. 00:00:30</li>
   <li name="exit">Return to test menu</li>
 </ul>
